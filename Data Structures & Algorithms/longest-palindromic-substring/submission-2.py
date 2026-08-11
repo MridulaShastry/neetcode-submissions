@@ -1,15 +1,26 @@
 class Solution:
-    def rob(self, nums: List[int]) -> int:
-        return max(nums[0], self.helper(nums[1:]), self.helper(nums[:-1]))
+    def longestPalindrome(self, s: str) -> str:
+        res = ""
+        resLen = 0
 
+        for i in range(len(s)):
+            # odd length
+            l, r = i, i
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l + 1) > resLen:
+                    res = s[l:r+1]
+                    resLen = r - l + 1
+                l -= 1
+                r += 1
 
-    def helper(self, nums):
-        rob1, rob2 = 0, 0
+            # even length
+            l, r = i, i + 1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l + 1) > resLen:
+                    res = s[l: r+1]
+                    resLen = r - l + 1
+                l -= 1
+                r += 1
+        return res
 
-        for n in nums:
-            newRob = max(rob1 + n, rob2)
-            rob1 = rob2
-            rob2 = newRob
-
-        return rob2
         
